@@ -175,7 +175,8 @@ def add_to_cart(request):
     # Add to cart logic
     user = request.user
     cart, created = Cart.objects.get_or_create(user=user, product=product)
-    cart.quantity += 1
+    if not created:
+        cart.quantity += 1
     cart.save()
     
     # Redirect to cart
